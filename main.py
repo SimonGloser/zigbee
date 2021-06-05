@@ -1,3 +1,4 @@
+from os import link
 from ursina import *   
 from random import randint
 
@@ -45,21 +46,19 @@ class Player(Entity):
         #update moving speed
         #check if x or y ist greater set lower value to 0
         if (x_koordinate > 30 or y_koordinate > 30) or (x_koordinate < -30 or y_koordinate < -30):
-                if (x_koordinate > 30 or x_koordinate < -30 ):
-                        if x_koordinate > 0: #also rechts
-                                self.dx = .3
-                                self.dy = 0
-                        else:
+                        if x_koordinate > -30: #also rechts
                                 self.dx = -.3
                                 self.dy = 0
+                        elif x_koordinate < 30:
+                                self.dx = .3
+                                self.dy = 0
 
 
 
-                elif  (y_koordinate > 30 or y_koordinate < -30 ):
-                        if y_koordinate > 0: #hoch runter
+                        if y_koordinate > 30: #hoch runter
                                 self.dx = 0
                                 self.dy = .3
-                        else:
+                        elif y_koordinate < -30:
                                 self.dx = 0
                                 self.dy = -.3
 
