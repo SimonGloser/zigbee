@@ -44,8 +44,8 @@ class Player(Entity):
 
         #update moving speed
         #check if x or y ist greater set lower value to 0
-        if (x_koordinate > 15 or y_koordinate > 15) or (x_koordinate < -15 or y_koordinate < -15):
-                if (x_koordinate > y_koordinate):
+        if (x_koordinate > 30 or y_koordinate > 30) or (x_koordinate < -30 or y_koordinate < -30):
+                if (x_koordinate > 30 or x_koordinate < -30 ):
                         if x_koordinate > 0: #also rechts
                                 self.dx = .3
                                 self.dy = 0
@@ -55,7 +55,7 @@ class Player(Entity):
 
 
 
-                if (y_koordinate > x_koordinate):
+                elif  (y_koordinate > 30 or y_koordinate < -30 ):
                         if y_koordinate > 0: #hoch runter
                                 self.dx = 0
                                 self.dy = .3
