@@ -34,8 +34,8 @@ class Player(Entity):
         splitPacketX=splitPacket[0].split("x00")
         splitPacketY=splitPacket[1].split("\x00")
 
-        x_koordinate = int(float(splitPacketX[0]))
-        y_koordinate = int(float(splitPacketY[1]))
+        y_koordinate = int(float(splitPacketX[0]))
+        x_koordinate = int(float(splitPacketY[1]))
 
 
         global body, text
@@ -44,23 +44,24 @@ class Player(Entity):
 
         #update moving speed
         #check if x or y ist greater set lower value to 0
-        if (x_koordinate > y_koordinate and x_koordinate > 15):
-            if x_koordinate > 0: #also rechts
-                self.dx = .3
-                self.dy = 0
-            else:
-                self.dx = -.3
-                self.dy = 0
+        if (x_koordinate > 15 or y_koordinate > 15) or (x_koordinate < -15 or y_koordinate < -15):
+                if (x_koordinate > y_koordinate):
+                        if x_koordinate > 0: #also rechts
+                                self.dx = .3
+                                self.dy = 0
+                        else:
+                                self.dx = -.3
+                                self.dy = 0
 
 
 
-        if (y_koordinate > x_koordinate and y_koordinate > 15):
-            if y_koordinate > 0: #also rechts
-                self.dx = 0
-                self.dy = .3
-            else:
-                self.dx = 0
-                self.dy = -.3
+                if (y_koordinate > x_koordinate):
+                        if y_koordinate > 0: #hoch runter
+                                self.dx = 0
+                                self.dy = .3
+                        else:
+                                self.dx = 0
+                                self.dy = -.3
 
 
 
