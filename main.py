@@ -1,13 +1,16 @@
 from ursina import *   
 from random import randint
 
-import serial.tools.list_ports
-ports = serial.tools.list_ports.comports()
+import serial
+"""
+Dieser Teil wird spaeter in eine seperate funktion ausgelagert. Dieser stand dient nur zu demozwecken
+"""
 
-for port, desc, hwid in sorted(ports):
-        print("{}: {} [{}]".format(port, desc, hwid))
-from ursina import *   
-from random import randint
+ser = serial.Serial('com4', baudrate = 38400, parity= serial.PARITY_NONE,stopbits=serial.STOPBITS_ONE)
+
+while 1:
+    a=ser.readline()
+    
 
 
 
