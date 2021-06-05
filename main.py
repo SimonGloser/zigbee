@@ -1,38 +1,15 @@
 from ursina import *   
 from random import randint
 
+import time
 import serial
 """
 Dieser Teil wird spaeter in eine seperate funktion ausgelagert. Dieser stand dient nur zu demozwecken
 """
 
-ser = serial.Serial('com4', baudrate = 38400, parity= serial.PARITY_NONE,stopbits=serial.STOPBITS_ONE)
-
-while 1:
-    a=ser.readline()
+arduinoData=serial.Serial('com8',38400)
+time.sleep(1)
     
-
-
-
-file1 = open('test_output.txt', 'r')
-
-list_x_koordinates = []
-list_y_koordinates = []
-count = 0
-# Strips the newline character
-for line in file1:
-    count += 1
-    koordinates = line.split(';')
-    x_koordinate = int(float(koordinates[0]))
-    y_koordinate = int(float(koordinates[1]))
-
-    list_x_koordinates.append(x_koordinate)
-    list_y_koordinates.append(y_koordinate)
- 
-# Closing files
-file1.close()
-
-
 class Player(Entity):
     def __init__(self):
         super().__init__()
@@ -48,14 +25,27 @@ class Player(Entity):
         self.koordcounter = 0
 
     def update(self):
+        
+        dataPacket = arduinoData.readline() #reply
+        dataPacket=str(dataPacket,'utf-8')
+
+        splitPacket=dataPacket.split(";")
+
+        splitPacketX=splitPacket[0].split("x00")
+        splitPacketY=splitPacket[1].split("\x00")
+
+        x_koordinate = int(float(splitPacketX[0]))
+        y_koordinate = int(float(splitPacketY[1]))
+
+
         global body, text
         self.x += time.dt * self.dx
         self.y += time.dt * self.dy
 
         #update moving speed
         #check if x or y ist greater set lower value to 0
-        if (list_x_koordinates[self.koordcounter] > list_y_koordinates[self.koordcounter]):
-            if list_x_koordinates[self.koordcounter] > 0: #also rechts
+        if (x_koordinate > y_koordinate and x_koordinate > 15):
+            if x_koordinate > 0: #also rechts
                 self.dx = .3
                 self.dy = 0
             else:
@@ -64,8 +54,8 @@ class Player(Entity):
 
 
 
-        if (list_y_koordinates[self.koordcounter] > list_x_koordinates[self.koordcounter]):
-            if list_y_koordinates[self.koordcounter] > 0: #also rechts
+        if (y_koordinate > x_koordinate and y_koordinate > 15):
+            if y_koordinate > 0: #also rechts
                 self.dx = 0
                 self.dy = .3
             else:
