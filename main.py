@@ -43,6 +43,9 @@ class Player(Entity):
         self.x += time.dt * self.dx
         self.y += time.dt * self.dy
 
+        #camera control
+        camera_control()
+
         #update moving speed
         #check if x or y ist greater set lower value to 0
         if (x_koordinate > 30 or y_koordinate > 30) or (x_koordinate < -30 or y_koordinate < -30):
@@ -132,6 +135,13 @@ field = Entity(model = 'quad', color = color.green, scale = (12, 12), position =
 
 camera.position = (field_size//2, -18, -18)
 camera.rotation_x = -56
+
+"""
+An dieser Stelle wird die Kamera gesteuert
+"""
+def camera_control():
+        field.rotation_z += held_keys["d"]
+        field.rotation_z -= held_keys["a"]
 
 apple = Entity(
     parent = field, 
